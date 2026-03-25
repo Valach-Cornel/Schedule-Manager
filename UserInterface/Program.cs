@@ -1,4 +1,6 @@
-﻿using System.Security.AccessControl;
+﻿using DataAccess;
+using System.Security.AccessControl;
+using UserInterface;
 
 namespace Schedule_Manager
 {
@@ -7,9 +9,9 @@ namespace Schedule_Manager
 
         static void Main(string[] args)
         {
-            AdministratorEntitateMemorie admin = new AdministratorEntitateMemorie();
+            IStocareData eventsManager = StocareFactory.GetManager();
+            ObjectiveManager objectiveManager = new ObjectiveManager();
             string optiune;
-
             do
             {
                 Console.WriteLine("C. Citire eveniment");
@@ -22,13 +24,13 @@ namespace Schedule_Manager
                 switch (optiune)
                 {
                     case "C":
-                        CitireEveniment(admin);
+                        CitireEveniment(eventsManager, objectiveManager);
                         break;
                     case "A":
-                        AfisareEvenimente(admin);
+                        AfisareEvenimente(eventsManager);
                         break;
                     case "S":
-                        CautareCategorie(admin);
+                        CautareCategorie(eventsManager);
                         break;
                     default:
                         Console.WriteLine("Optiunea aleasa nu este valida!");
@@ -38,7 +40,7 @@ namespace Schedule_Manager
 
         }
 
-        public static void CitireEveniment(AdministratorEntitateMemorie admin)
+        public static void CitireEveniment(IStocareData evManager, ObjectiveManager obManager)
         {
             Console.WriteLine("Adaugare Obiectiv");
             Console.Write("Titlu: ");
@@ -56,8 +58,7 @@ namespace Schedule_Manager
             Priority prioritateAleasa = (Priority)alegerePrioritate;
 
             Objective obiectivNou = new Objective(objTitle, objCategory, objDesc, prioritateAleasa);
-            admin.AdaugaObiectiv(obiectivNou);
-
+            obManager.AdaugaObiectiv(obiectivNou);
 
             Console.WriteLine("Adaugare Eveniment");
             Console.Write("Titlu: ");
@@ -93,23 +94,25 @@ namespace Schedule_Manager
             }
 
             ScheduleEvent evenimentNou = new ScheduleEvent(evTitle, evDesc, startTime, endTime, optiuniAlese, obiectivNou);
-            admin.AdaugaEveniment(evenimentNou);
+            evManager.AdaugaEveniment(evenimentNou);
 
             Console.WriteLine("Date au fost salvate cu succes!");
         }
 
-        public static void AfisareEvenimente(AdministratorEntitateMemorie admin)
+        public static void AfisareEvenimente(IStocareData evManager)
         {
-            foreach (var item in admin.ObtineEvenimente())
+            foreach (var item in evManager.ObtineEvenimente())
                 Console.WriteLine(item.Info());
         }
 
-        public static void CautareCategorie(AdministratorEntitateMemorie admin)
+        public static void CautareCategorie(IStocareData evManager)
         {
-            Console.WriteLine("Categoria cautata: ");
+            Console.Write("Categoria cautata: ");
             string? categorieCautata = Console.ReadLine();
 
-            Console.WriteLine(admin.CautaDupaCategorie(categorieCautata).Info());
+            List<ScheduleEvent> listaCategorii = evManager.CautaDupaCategorie(categorieCautata);
+            foreach (var item in listaCategorii)
+                Console.WriteLine(item.Info());
         }
     }
 }

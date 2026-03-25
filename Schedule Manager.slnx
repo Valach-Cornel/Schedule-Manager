@@ -1,5 +1,5 @@
 <Solution>
+  <Project Path="UserInterface/UserInterface.csproj" Id="254d31db-9258-4c38-a149-55ed2efa15de" />
   <Project Path="DataAccess/DataAccess.csproj" Id="78fe73d0-6189-4014-b2fe-7dfe5a09924c" />
   <Project Path="Models/Models.csproj" Id="39b4b450-9969-477c-8f37-0f45c21237f8" />
-  <Project Path="UserInterface/UserInterface.csproj" Id="254d31db-9258-4c38-a149-55ed2efa15de" />
 </Solution>
