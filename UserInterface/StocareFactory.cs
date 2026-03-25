@@ -14,12 +14,12 @@ namespace UserInterface
         public static IStocareData GetManager()
         {
             string formatSalvare = ConfigurationManager.AppSettings[FORMAT_SALVARE] ?? "";
-
             string numeFisier = ConfigurationManager.AppSettings[NUME_FISIER] ?? "";
-            string locatieFisierSolutie = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? "";
 
-            string caleCompletaFisier = locatieFisierSolutie + "\\" + numeFisier;
+            string directorCurent = Directory.GetCurrentDirectory();
+            string folderSolutie = Directory.GetParent(directorCurent)?.Parent?.Parent?.Parent?.FullName ?? "";
 
+            string caleCompletaFisier = Path.Combine(folderSolutie, "DataAccess", $"{numeFisier}.{formatSalvare}");
 
             if (formatSalvare != null)
             {
@@ -29,7 +29,7 @@ namespace UserInterface
                     case "memorie":
                         return new EventsManager();
                     case "txt":
-                        return new EventsManagerText(caleCompletaFisier + "." + formatSalvare);
+                        return new EventsManagerText(caleCompletaFisier);
                 }
             }
 
