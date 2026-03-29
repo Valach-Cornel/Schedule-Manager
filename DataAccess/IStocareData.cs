@@ -11,5 +11,7 @@ namespace DataAccess
         List<ScheduleEvent> ObtineEvenimente();
         List<ScheduleEvent> CautaDupaCategorie(string categorieCautata);
         bool UpdateEveniment(ScheduleEvent evActualizat);
+        bool CompleteazaEveniment(string titluEv);
+        bool StergereEveniment(string titluEv);
     }
 }

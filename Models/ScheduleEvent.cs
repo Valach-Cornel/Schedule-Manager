@@ -91,22 +91,24 @@ namespace Schedule_Manager
             string dateObiectiv = string.Empty;
             if (ParentObjective != null)
                 dateObiectiv = $"{ParentObjective.Title}|{ParentObjective.Category}|{ParentObjective.Description}|{ParentObjective.IsAchieved}|{(int)ParentObjective.PrioritateObiectiv}";
-            //dateObiectiv = $"{ParentObjective.Title};{ParentObjective.Category};{ParentObjective.Description};{(int)ParentObjective.PrioritateObiectiv}";
 
             return $"{Id}{SEPARATOR_FISIER}{Title}{SEPARATOR_FISIER}{Description}{SEPARATOR_FISIER}{StartTime}{SEPARATOR_FISIER}{EndTime}{SEPARATOR_FISIER}{IsCompleted}{SEPARATOR_FISIER}{dateObiectiv}{SEPARATOR_FISIER}{Options}";
-            //return $"{Id};{Title};{StartTime};{Description};{EndTime};{IsCompleted};{Options};{dateObiectiv}";
         }
         public string Info()
         {
-            string status = IsCompleted ? "[X]" : "[ ]";
+            string trimTitle = Title.Length > 20 ? Title.Substring(0, 17) + "..." : Title;
+            string dataStart = StartTime.ToString("yyyy-MM-dd HH:mm");
+            string dataEnd = EndTime.ToString("yyyy-MM-dd HH:mm"); ;
+            string status = IsCompleted ? "Da [X]" : "Nu [ ]";
 
-            string objectiveInfo = "";
+            string objectiveName = "---";
             if (ParentObjective != null)
             {
-                objectiveInfo = $" => [Legat de: {ParentObjective.Category} - {ParentObjective.Title}]";
+                string objectiveTitle = ParentObjective.Title;
+                objectiveName = objectiveTitle.Length > 20 ? objectiveTitle.Substring(0, 17) + "..." : objectiveTitle;
             }
 
-            return $"{status} {StartTime:dd.MM.yyyy HH:mm} - {EndTime:HH:mm} | {Title} ({Description}){objectiveInfo} [Optiuni: {Options}]";
+            return string.Format("| {0,-20} | {1,-16} | {2,-16} | {3,-10} | {4,-20} |", trimTitle, dataStart, dataEnd, status, objectiveName);
         }
     }
 }

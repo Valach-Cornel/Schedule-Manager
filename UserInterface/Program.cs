@@ -1,4 +1,5 @@
 ﻿using DataAccess;
+using System.Collections;
 using System.Security.AccessControl;
 using UserInterface;
 
@@ -12,11 +13,15 @@ namespace Schedule_Manager
             IStocareData eventsManager = StocareFactory.GetManager();
             ObjectiveManager objectiveManager = new ObjectiveManager();
             string optiune;
+            string spacer = new string('-', 90);
             do
             {
+                Console.WriteLine(spacer);
                 Console.WriteLine("C. Citire eveniment");
                 Console.WriteLine("A. Afisare evenimente");
                 Console.WriteLine("S. Cautare eveniment dupa categorie");
+                Console.WriteLine("F. Finalizare eveniment");
+                Console.WriteLine("R. Stergere eveniment");
 
                 Console.WriteLine("Alegeti o optiune");
                 optiune = Console.ReadLine()?.ToUpper() ?? string.Empty;
@@ -31,6 +36,12 @@ namespace Schedule_Manager
                         break;
                     case "S":
                         CautareCategorie(eventsManager);
+                        break;
+                    case "F":
+                        FinalizareEveniment(eventsManager);
+                        break;
+                    case "R":
+                        StergereEveniment(eventsManager);
                         break;
                     default:
                         Console.WriteLine("Optiunea aleasa nu este valida!");
@@ -101,8 +112,24 @@ namespace Schedule_Manager
 
         public static void AfisareEvenimente(IStocareData evManager)
         {
-            foreach (var item in evManager.ObtineEvenimente())
+            Console.WriteLine("Lista Evenimente:");
+            List<ScheduleEvent> evList = evManager.ObtineEvenimente();
+
+            if (evList == null || evList.Count == 0)
+            {
+                Console.WriteLine("Nu exista evenimente salvate inca.");
+                return;
+            }
+
+            string spacer = new string('-', 90);
+            Console.WriteLine(spacer);
+            Console.WriteLine(string.Format("| {0,-20} | {1,-16} | {2,-16} | {3,-10} | {4,-20} |", "Titlu Eveniment", "Data Inceput", "Data Final", "Finalizat", "Obiectiv"));
+            Console.WriteLine(spacer);
+            foreach (var item in evList)
                 Console.WriteLine(item.Info());
+
+            Console.WriteLine(spacer);
+
         }
 
         public static void CautareCategorie(IStocareData evManager)
@@ -113,6 +140,39 @@ namespace Schedule_Manager
             List<ScheduleEvent> listaCategorii = evManager.CautaDupaCategorie(categorieCautata);
             foreach (var item in listaCategorii)
                 Console.WriteLine(item.Info());
+        }
+
+        public static void FinalizareEveniment(IStocareData evManager)
+        {
+            Console.Write("Titlul evenimentului:");
+            string title = Console.ReadLine() ?? string.Empty;
+
+            bool succes = evManager.CompleteazaEveniment(title);
+
+            if(succes)
+            {
+                Console.WriteLine("Evenimentul a fost marcat ca si finalizat");
+            }else
+            {
+                Console.WriteLine("Evenimentul nu a fost gasit");
+            }
+        }
+
+        public static void StergereEveniment(IStocareData evManager)
+        {
+            Console.Write("Titlul evenimentului:");
+            string title = Console.ReadLine() ?? string.Empty;
+
+            bool succes = evManager.StergereEveniment(title);
+
+            if (succes)
+            {
+                Console.WriteLine("Evenimentul a fost sters");
+            }
+            else
+            {
+                Console.WriteLine("Evenimentul nu a fost gasit");
+            }
         }
     }
 }

@@ -66,5 +66,53 @@ namespace DataAccess
             }
             return actualizareCuSucces;
         }
+
+        public bool CompleteazaEveniment(string titluEv)
+        {
+            List<ScheduleEvent> events = ObtineEvenimente();
+            bool isFound = false;
+
+            foreach(var item in events)
+            {
+                if(item.Title.Equals(titluEv, StringComparison.OrdinalIgnoreCase))
+                {
+                    item.IsCompleted = true;
+                    isFound = true;
+                    break;
+                }
+            }
+
+            if(isFound)
+            {
+                using (StreamWriter sw = new StreamWriter(numeFisier, false))
+                {
+                    foreach (var item in events)
+                        sw.WriteLine(item.ConversieLaSirPentruFisier());
+                }
+            }
+
+            return isFound;
+        }
+        
+        public bool StergereEveniment(string titluEv)
+        {
+            List<ScheduleEvent> events = ObtineEvenimente();
+
+            ScheduleEvent deleteEv = events.Where(ev => ev.Title.Equals(titluEv, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            
+            if(deleteEv != null)
+            {
+                events.Remove(deleteEv);
+
+                using(StreamWriter sw = new StreamWriter(numeFisier, false))
+                {
+                    foreach (var item in events)
+                        sw.WriteLine(item.ConversieLaSirPentruFisier());
+                }
+                return true;
+            }
+
+            return false;
+        }
     }
 }
