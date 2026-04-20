@@ -2,5 +2,4 @@
   <Project Path="DataAccess/DataAccess.csproj" Id="78fe73d0-6189-4014-b2fe-7dfe5a09924c" />
   <Project Path="Models/Models.csproj" Id="39b4b450-9969-477c-8f37-0f45c21237f8" />
   <Project Path="ScheduleGUI/ScheduleGUI.csproj" Id="f0b45865-5eea-4c33-a839-9902e12de2f1" />
-  <Project Path="UserInterface/UserInterface.csproj" Id="254d31db-9258-4c38-a149-55ed2efa15de" />
 </Solution>

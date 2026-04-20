@@ -57,5 +57,24 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
+        
+        <Button Content="+ Adaugă" 
+            Click="BtnDeschideAdaugare_Click" 
+            HorizontalAlignment="Right" 
+            VerticalAlignment="Bottom" 
+            Margin="0,0,30,30" 
+            Padding="20,12" 
+            Background="#6be619" 
+            Foreground="White" 
+            FontWeight="Bold" 
+            BorderThickness="0"
+            FontSize="16">
+
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Window>

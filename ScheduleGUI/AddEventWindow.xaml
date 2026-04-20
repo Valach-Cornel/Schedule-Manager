@@ -1,0 +1,47 @@
+﻿<Window x:Class="ScheduleGUI.AddEventWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ScheduleGUI"
+        mc:Ignorable="d"
+        Title="Adaugă un Eveniment Nou" Height="450" Width="400" WindowStartupLocation="CenterScreen" Background="#F0F4F8">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Creează Eveniment" FontSize="22" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,20"/>
+
+        <StackPanel Grid.Row="1" Margin="0,5">
+            <Label x:Name="lblTitlu" Content="Titlu Eveniment:" FontWeight="SemiBold"/>
+            <TextBox x:Name="txtTitlu" Height="25" Padding="2"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Margin="0,5">
+            <Label x:Name="lblDescriere" Content="Descriere scurtă:" FontWeight="SemiBold"/>
+            <TextBox x:Name="txtDescriere" Height="50" TextWrapping="Wrap" AcceptsReturn="True" Padding="2"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Margin="0,5">
+            <Label x:Name="lblDataInceput" Content="Data și Ora de început:" FontWeight="SemiBold"/>
+            <StackPanel Orientation="Horizontal">
+                <DatePicker x:Name="dpData" Width="150" Margin="0,0,10,0"/>
+
+                <TextBlock Text="Ora:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <TextBox x:Name="txtOra" Width="60" Padding="2" Text="12:00" VerticalAlignment="Center" ToolTip="Format: HH:mm"/>
+            </StackPanel>
+        </StackPanel>
+
+        <TextBlock x:Name="txtErori" Grid.Row="5" Foreground="Red" FontWeight="Bold" TextWrapping="Wrap" Margin="0,10"/>
+
+        <Button Grid.Row="6" Content="Salveză Evenimentul" Height="35" Background="#3498DB" Foreground="White" FontWeight="Bold" Click="BtnSalveaza_Click"/>
+    </Grid>
+</Window>

@@ -33,5 +33,14 @@ namespace ScheduleGUI
             List<ScheduleEvent> events = manager.ObtineEvenimente();
             listaCarduri.ItemsSource = events;
         }
+
+        private void BtnDeschideAdaugare_Click(object sender, RoutedEventArgs e)
+        {
+            AddEventWindow fereastraNoua = new AddEventWindow();
+            fereastraNoua.ShowDialog(); // ShowDialog oprește interacțiunea cu fereastra principală până o închizi pe asta
+
+            // După ce se închide fereastra de adăugare, reîncărcăm lista ca să apară noul card!
+            IncarcaDate();
+        }
     }
 }
