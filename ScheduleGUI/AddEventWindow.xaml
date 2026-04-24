@@ -13,8 +13,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
@@ -39,6 +39,41 @@
                 <TextBox x:Name="txtOra" Width="60" Padding="2" Text="12:00" VerticalAlignment="Center" ToolTip="Format: HH:mm"/>
             </StackPanel>
         </StackPanel>
+
+        <StackPanel Grid.Row="4">
+            <Label Content="Opțiuni notificare:"/>
+            <StackPanel Orientation="Horizontal">
+                <CheckBox x:Name="ckbOnline"
+                          Content="Online"
+                          Margin="0,0,15,0"
+                          Checked="Optiune_CheckedChanged"
+                          Unchecked="Optiune_CheckedChanged"/>
+                <CheckBox x:Name="ckbReminder" 
+                          Content="Reminder" 
+                          Margin="0,0,15,0"
+                          Checked="Optiune_CheckedChanged"
+                          Unchecked="Optiune_CheckedChanged"/>
+                <CheckBox x:Name="ckbRecurent" 
+                          Content="Recurent" 
+                          Margin="0,0,15,0"
+                          Checked="Optiune_CheckedChanged"
+                          Unchecked="Optiune_CheckedChanged"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="5">
+            <Label Content="Stare:"/>
+            <StackPanel Orientation="Horizontal">
+                <RadioButton Content="Nefinalizat"
+                             x:Name="radioNefinalizat" 
+                             IsChecked="True"
+                             Margin="0,0,15,0"/>
+                <RadioButton Content="Finalizat"
+                             x:Name="ckbFinalizat" 
+                             Margin="0,0,15,0"/>
+            </StackPanel>
+        </StackPanel>
+
 
         <TextBlock x:Name="txtErori" Grid.Row="5" Foreground="Red" FontWeight="Bold" TextWrapping="Wrap" Margin="0,10"/>
 

@@ -42,14 +42,14 @@ namespace Schedule_Manager
         public Objective ParentObjective { get; set; }
         public EventOptions Options { get; set; }
 
-        public ScheduleEvent(string title, string description, DateTime startTime, DateTime endTime, EventOptions options, Objective parentObjective = null)
+        public ScheduleEvent(string title, string description, DateTime startTime, DateTime endTime, EventOptions options, bool state, Objective parentObjective = null)
         {
             Id = Guid.NewGuid();
             Title = title;
             Description = description;
             StartTime = startTime;
             EndTime = endTime;
-            IsCompleted = false;
+            IsCompleted = state;
 
             ParentObjective = parentObjective;
             Options = options;

@@ -22,11 +22,13 @@ namespace ScheduleGUI
         private const int MAX_LUNGIME_DESCRIERE = 100;
 
         private IStocareData manager;
+        List<EventOptions> optiuniSelectate;
 
         public AddEventWindow()
         {
             InitializeComponent();
             manager = StocareFactory.GetManager();
+            optiuniSelectate = new List<EventOptions>();
         }
 
         private void BtnSalveaza_Click(object sender, RoutedEventArgs e)
@@ -38,6 +40,12 @@ namespace ScheduleGUI
             string titlu = txtTitlu.Text.Trim();
             string descriere = txtDescriere.Text.Trim();
             DateTime dataStartParsata = DateTime.Now;
+            bool isCompleted = GetStareEveniment();
+
+            EventOptions optiuniFinale = EventOptions.Niciuna;
+
+            foreach (var optiune in optiuniSelectate)
+                optiuniFinale = optiuniFinale | optiune;
 
             if (titlu.Length < MIN_LUNGIME_TITLU || titlu.Length > MAX_LUNGIME_TITLU)
             {
@@ -81,7 +89,7 @@ namespace ScheduleGUI
             {
                 DateTime dataFinal = dataStartParsata.AddHours(1);
 
-                ScheduleEvent evenimentNou = new ScheduleEvent(titlu, descriere, dataStartParsata, dataFinal, EventOptions.Niciuna, null);
+                ScheduleEvent evenimentNou = new ScheduleEvent(titlu, descriere, dataStartParsata, dataFinal, optiuniFinale, isCompleted, null);
 
                 manager.AdaugaEveniment(evenimentNou);
 
@@ -95,6 +103,33 @@ namespace ScheduleGUI
             lblDescriere.Foreground = Brushes.Black;
             lblDataInceput.Foreground = Brushes.Black;
             txtErori.Text = "";
+        }
+
+        private void Optiune_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            CheckBox cb = sender as CheckBox;
+            if (cb == null || cb.Content == null) return;
+
+            string numeOptiune = cb.Content.ToString();
+
+            if (Enum.TryParse(numeOptiune, out EventOptions optiuneAleasa))
+            {
+                if (cb.IsChecked == true)
+                {
+                    if (!optiuniSelectate.Contains(optiuneAleasa))
+                        optiuniSelectate.Add(optiuneAleasa);
+                }
+                else
+                    optiuniSelectate.Remove(optiuneAleasa);
+            }
+        }
+
+        private bool GetStareEveniment()
+        {
+            if (radioNefinalizat.IsChecked == true)
+                return false;
+            else
+                return true;
         }
     }
 }

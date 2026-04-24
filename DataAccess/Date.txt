@@ -1,5 +1,2 @@
-7db09e13-7ad6-4f8b-898d-5f5f241e527b;Temele pentru acasa;Sa termin temele;4/2/2026 4:00:00 PM;4/2/2026 8:00:00 PM;False;Sa fac temele|Educatie|Sa fac temele la 2 materii|False|3;Reminder
-7db09e13-7ad6-4f8b-898d-5f5f241e527b;Temele pentru acasa;Sa termin temele;4/2/2026 4:00:00 PM;4/2/2026 8:00:00 PM;False;Sa fac temele|Educatie|Sa fac temele la 2 materii|False|3;Reminder
-7db09e13-7ad6-4f8b-898d-5f5f241e527b;Temele pentru acasa;Sa termin temele;4/2/2026 4:00:00 PM;4/2/2026 8:00:00 PM;False;Sa fac temele|Educatie|Sa fac temele la 2 materii|False|3;Reminder
-c0f02c6a-da6f-4536-ab2e-b0ead62ae6d2;Fotbal;sa merg la fotbal;12/25/2026 2:00:00 PM;12/25/2026 3:00:00 PM;False;;Niciuna
-0916f0c0-4be8-4660-b11c-ecdc93afa85c;aADAD;asdasd;4/8/2026 12:00:00 PM;4/8/2026 1:00:00 PM;False;;Niciuna
+9a86e93b-fa12-478d-9b55-10701659e4c7;aaaa;1234;4/5/2026 12:00:00 PM;4/5/2026 1:00:00 PM;False;;Online
+978ff9d1-a994-4d14-affe-89aa4e1c6b1f;1123;aaa;4/7/2026 12:00:00 PM;4/7/2026 1:00:00 PM;True;;Online

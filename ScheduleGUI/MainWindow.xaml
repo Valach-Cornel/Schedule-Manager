@@ -7,8 +7,45 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Background="#F0F4F8">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="Transparent">
+            <StackPanel Orientation="Horizontal" Margin="15,15,15,5" Background="Transparent">
+                <TextBlock Text="Cauta:" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,10,0"/>
+                <TextBox x:Name="txtCauta"
+                         VerticalContentAlignment="Center"
+                         Padding="5"
+                         Width="250" 
+                         Height="30" 
+                         TextChanged="txtbox_TextChanged" 
+                         ToolTip="Cauta dupa titlu...">
+                    <TextBox.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+            </StackPanel>
+            <Button Content="+ Adauga" 
+                    Click="BtnDeschideAdaugare_Click" 
+                    HorizontalAlignment="Right" 
+                    Padding="20,12" 
+                    Background="#6be619" 
+                    Foreground="White" 
+                    FontWeight="Bold" 
+                    BorderThickness="0"
+                    FontSize="13">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="20"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
             <ItemsControl x:Name="listaCarduri" Padding="20">
 
                 <ItemsControl.ItemTemplate>
@@ -57,24 +94,5 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        
-        <Button Content="+ Adaugă" 
-            Click="BtnDeschideAdaugare_Click" 
-            HorizontalAlignment="Right" 
-            VerticalAlignment="Bottom" 
-            Margin="0,0,30,30" 
-            Padding="20,12" 
-            Background="#6be619" 
-            Foreground="White" 
-            FontWeight="Bold" 
-            BorderThickness="0"
-            FontSize="16">
-
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="20"/>
-                </Style>
-            </Button.Resources>
-        </Button>
     </Grid>
 </Window>
