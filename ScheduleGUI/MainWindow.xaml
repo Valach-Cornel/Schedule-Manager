@@ -6,14 +6,38 @@
         xmlns:local="clr-namespace:ScheduleGUI"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2980B9"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+
     <Grid Background="#F0F4F8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="Transparent">
-            <StackPanel Orientation="Horizontal" Margin="15,15,15,5" Background="Transparent">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="Transparent"
+                    HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="15,15,15,15" Background="Transparent">
                 <TextBlock Text="Cauta:" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,10,0"/>
                 <TextBox x:Name="txtCauta"
                          VerticalContentAlignment="Center"
@@ -32,7 +56,8 @@
             <Button Content="+ Adauga" 
                     Click="BtnDeschideAdaugare_Click" 
                     HorizontalAlignment="Right" 
-                    Padding="20,12" 
+                    Height="35"
+                    Padding="20, 5" 
                     Background="#6be619" 
                     Foreground="White" 
                     FontWeight="Bold" 
@@ -40,7 +65,7 @@
                     FontSize="13">
                 <Button.Resources>
                     <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="20"/>
+                        <Setter Property="CornerRadius" Value="10"/>
                     </Style>
                 </Button.Resources>
             </Button>

@@ -7,6 +7,17 @@
         mc:Ignorable="d"
         Title="Adaugă un Eveniment Nou" Height="450" Width="400" WindowStartupLocation="CenterScreen" Background="#F0F4F8">
 
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+        </Style>
+    </Window.Resources>
+    
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
