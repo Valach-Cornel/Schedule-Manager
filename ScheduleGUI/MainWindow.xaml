@@ -71,9 +71,14 @@
             </Button>
         </StackPanel>
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
-            <ItemsControl x:Name="listaCarduri" Padding="20">
+            <ListBox x:Name="listaCarduri" 
+                     Background="Transparent" 
+                     BorderThickness="0" 
+                     HorizontalContentAlignment="Stretch"
+                     SelectionChanged="ListaCarduri_SelectionChanged"
+                     Padding="10,10,10,80">
 
-                <ItemsControl.ItemTemplate>
+                <ListBox.ItemTemplate>
                     <DataTemplate>
 
                         <Border Background="White" CornerRadius="12" Margin="10,10,10,20" Padding="25">
@@ -116,8 +121,8 @@
                         </DataTemplate.Triggers>
 
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </ScrollViewer>
     </Grid>
 </Window>

@@ -88,6 +88,6 @@
 
         <TextBlock x:Name="txtErori" Grid.Row="5" Foreground="Red" FontWeight="Bold" TextWrapping="Wrap" Margin="0,10"/>
 
-        <Button Grid.Row="6" Content="Salveză Evenimentul" Height="35" Background="#3498DB" Foreground="White" FontWeight="Bold" Click="BtnSalveaza_Click"/>
+        <Button Grid.Row="6" Content="Salveza" Height="35" Background="#3498DB" Foreground="White" FontWeight="Bold" Click="BtnSalveaza_Click"/>
     </Grid>
 </Window>

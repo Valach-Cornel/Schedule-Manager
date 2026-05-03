@@ -22,13 +22,27 @@ namespace ScheduleGUI
         private const int MAX_LUNGIME_DESCRIERE = 100;
 
         private IStocareData manager;
+        private ScheduleEvent evenimentDeEditat;
         List<EventOptions> optiuniSelectate;
 
-        public AddEventWindow()
+        public AddEventWindow(ScheduleEvent ev = null)
         {
             InitializeComponent();
             manager = StocareFactory.GetManager();
             optiuniSelectate = new List<EventOptions>();
+
+            evenimentDeEditat = ev;
+
+            if (evenimentDeEditat != null)
+            {
+                this.Title = "Editeaza Evenimentul";
+
+                txtTitlu.Text = evenimentDeEditat.Title;
+                dpData.SelectedDate = evenimentDeEditat.StartTime.Date;
+                txtOra.Text = evenimentDeEditat.StartTime.ToString("HH:mm");
+                ckbFinalizat.IsChecked = evenimentDeEditat.IsCompleted;
+
+            }
         }
 
         private void BtnSalveaza_Click(object sender, RoutedEventArgs e)
@@ -87,12 +101,17 @@ namespace ScheduleGUI
             }
             else
             {
-                DateTime dataFinal = dataStartParsata.AddHours(1);
+                ScheduleEvent evenimentModificat = new ScheduleEvent(txtTitlu.Text, "", dataStartParsata, dataStartParsata.AddHours(1), optiuniFinale, isCompleted, null);
 
-                ScheduleEvent evenimentNou = new ScheduleEvent(titlu, descriere, dataStartParsata, dataFinal, optiuniFinale, isCompleted, null);
+                evenimentModificat.IsCompleted = ckbFinalizat.IsChecked == true;
 
-                manager.AdaugaEveniment(evenimentNou);
 
+                if (evenimentDeEditat != null)
+                {
+                    manager.StergereEveniment(evenimentDeEditat.Title);
+                }
+
+                manager.AdaugaEveniment(evenimentModificat);
                 this.Close();
             }
         }

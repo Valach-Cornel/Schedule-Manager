@@ -50,5 +50,22 @@ namespace ScheduleGUI
 
             listaCarduri.ItemsSource = evenimenteFiltrate;
         }
+
+        private void ListaCarduri_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (listaCarduri.SelectedItem == null)
+                return;
+
+            ScheduleEvent evenimentSelectat = listaCarduri.SelectedItem as ScheduleEvent;
+
+            if(evenimentSelectat != null)
+            {
+                AddEventWindow fereastra = new AddEventWindow(evenimentSelectat);
+                fereastra.ShowDialog();
+                IncarcaDate();
+            }
+
+            listaCarduri.SelectedItem = null;
+        }
     }
 }
