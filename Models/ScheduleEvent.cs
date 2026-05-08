@@ -1,21 +1,15 @@
-﻿using System;
+﻿using Models.Enums;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Net.NetworkInformation;
+using System.Runtime.CompilerServices;
 using System.Text;
 using static System.Net.WebRequestMethods;
 
 namespace Schedule_Manager
 {
-
-    [Flags]
-    public enum EventOptions
-    {
-        Niciuna = 0,
-        Online = 1,
-        Reminder = 2,
-        Recurent = 4
-    }
-    public class ScheduleEvent
+    public class ScheduleEvent : INotifyPropertyChanged
     {
         private const char SEPARATOR_FISIER = ';';
         private const int ID = 0;
@@ -33,14 +27,61 @@ namespace Schedule_Manager
         private const int ISACHIEVED_OBJ = 3;
         private const int PRIORITATEOBIECTIV_OBJ = 4;
 
-        public Guid Id { get; private set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
-        public bool IsCompleted { get; set; }
-        public Objective ParentObjective { get; set; }
-        public EventOptions Options { get; set; }
+        private Guid _id;
+        public Guid Id
+        {
+            get { return _id; }
+            set { if (_id != value) { _id = value; OnPropertyChanged(); } }
+        }
+
+        private string _title;
+        public string Title
+        {
+            get { return _title; }
+            set { if (_title != value) { _title = value; OnPropertyChanged(); } }
+        }
+
+        private string _description;
+        public string Description
+        {
+            get { return _description; }
+            set { if (_description != value) { _description = value; OnPropertyChanged(); } }
+        }
+
+        private DateTime _startTime;
+        public DateTime StartTime
+        {
+            get { return _startTime; }
+            set { if (_startTime != value) { _startTime = value; OnPropertyChanged(); } }
+        }
+
+        private DateTime _endTime;
+        public DateTime EndTime
+        {
+            get { return _endTime; }
+            set { if (_endTime != value) { _endTime = value; OnPropertyChanged(); } }
+        }
+
+        private bool _isCompleted;
+        public bool IsCompleted
+        {
+            get { return _isCompleted; }
+            set { if (_isCompleted != value) { _isCompleted = value; OnPropertyChanged(); } }
+        }
+
+        private EventOptions _options;
+        public EventOptions Options
+        {
+            get { return _options; }
+            set { if (_options != value) { _options = value; OnPropertyChanged(); } }
+        }
+
+        private Objective _parentObjective;
+        public Objective ParentObjective
+        {
+            get { return _parentObjective; }
+            set { if (_parentObjective != value) { _parentObjective = value; OnPropertyChanged(); } }
+        }
 
         public ScheduleEvent(string title, string description, DateTime startTime, DateTime endTime, EventOptions options, bool state, Objective parentObjective = null)
         {
@@ -109,6 +150,12 @@ namespace Schedule_Manager
             }
 
             return string.Format("| {0,-20} | {1,-16} | {2,-16} | {3,-10} | {4,-20} |", trimTitle, dataStart, dataEnd, status, objectiveName);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

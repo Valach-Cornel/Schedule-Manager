@@ -1,16 +1,11 @@
-﻿using System;
+﻿using Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Schedule_Manager
 {
-    public enum Priority
-    {
-        Scazuta,
-        Medie,
-        Ridicata,
-        Critica
-    }
+    
 
     public class Objective
     {

@@ -1,7 +1,9 @@
 ﻿using DataAccess;
+using Models.Enums;
 using Schedule_Manager;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using System.Windows;
@@ -22,7 +24,7 @@ namespace ScheduleGUI
         private const int MAX_LUNGIME_DESCRIERE = 100;
 
         private IStocareData manager;
-        private ScheduleEvent evenimentDeEditat;
+        private ScheduleEvent evenimentCurent;
         List<EventOptions> optiuniSelectate;
 
         public AddEventWindow(ScheduleEvent ev = null)
@@ -31,18 +33,17 @@ namespace ScheduleGUI
             manager = StocareFactory.GetManager();
             optiuniSelectate = new List<EventOptions>();
 
-            evenimentDeEditat = ev;
-
-            if (evenimentDeEditat != null)
+            if (ev != null)
             {
-                this.Title = "Editeaza Evenimentul";
-
-                txtTitlu.Text = evenimentDeEditat.Title;
-                dpData.SelectedDate = evenimentDeEditat.StartTime.Date;
-                txtOra.Text = evenimentDeEditat.StartTime.ToString("HH:mm");
-                ckbFinalizat.IsChecked = evenimentDeEditat.IsCompleted;
-
+                evenimentCurent = ev;
+                this.Title = "Editează Evenimentul";
             }
+            else
+            {
+                evenimentCurent = new ScheduleEvent("", "", DateTime.Now, DateTime.Now.AddHours(1), EventOptions.Niciuna, false);
+            }
+
+            this.DataContext = evenimentCurent;
         }
 
         private void BtnSalveaza_Click(object sender, RoutedEventArgs e)
@@ -51,69 +52,77 @@ namespace ScheduleGUI
             string mesajEroare = "";
             bool dateValide = true;
 
-            string titlu = txtTitlu.Text.Trim();
-            string descriere = txtDescriere.Text.Trim();
-            DateTime dataStartParsata = DateTime.Now;
-            bool isCompleted = GetStareEveniment();
+            //string titlu = txtTitlu.Text.Trim();
+            //string descriere = txtDescriere.Text.Trim();
+            //DateTime dataStartParsata = DateTime.Now;
+            //bool isCompleted = GetStareEveniment();
 
-            EventOptions optiuniFinale = EventOptions.Niciuna;
+            //EventOptions optiuniFinale = EventOptions.Niciuna;
 
-            foreach (var optiune in optiuniSelectate)
-                optiuniFinale = optiuniFinale | optiune;
+            //foreach (var optiune in optiuniSelectate)
+            //    optiuniFinale = optiuniFinale | optiune;
 
-            if (titlu.Length < MIN_LUNGIME_TITLU || titlu.Length > MAX_LUNGIME_TITLU)
+            //if (titlu.Length < MIN_LUNGIME_TITLU || titlu.Length > MAX_LUNGIME_TITLU)
+            //{
+            //    lblTitlu.Foreground = Brushes.Red;
+            //    mesajEroare += $"- Titlul trebuie să aibă între {MIN_LUNGIME_TITLU} și {MAX_LUNGIME_TITLU} caractere.\n";
+            //    dateValide = false;
+            //}
+
+            //if (descriere.Length > MAX_LUNGIME_DESCRIERE)
+            //{
+            //    lblDescriere.Foreground = Brushes.Red;
+            //    mesajEroare += $"- Descrierea nu poate depăși {MAX_LUNGIME_DESCRIERE} caractere.\n";
+            //    dateValide = false;
+            //}
+            //if (dpData.SelectedDate == null)
+            //{
+            //    lblDataInceput.Foreground = Brushes.Red;
+            //    mesajEroare += "- Te rog să selectezi o dată din calendar.\n";
+            //    dateValide = false;
+            //}
+            //else
+            //{
+            //    string ziSelectata = dpData.SelectedDate.Value.ToString("dd/MM/yyyy");
+            //    string oraIntrodusa = txtOra.Text.Trim();
+
+            //    string dataSiOraComplete = $"{ziSelectata} {oraIntrodusa}";
+
+            //    if (!DateTime.TryParseExact(dataSiOraComplete, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out dataStartParsata))
+            //    {
+            //        lblDataInceput.Foreground = Brushes.Red;
+            //        mesajEroare += "- Formatul orei este invalid. Folosește exact formatul HH:MM (ex: 14:30).\n";
+            //        dateValide = false;
+            //    }
+            //}
+
+            //if (!dateValide)
+            //{
+            //    txtErori.Text = "Erori găsite:\n" + mesajEroare;
+            //}
+            //else
+            //{
+            //    ScheduleEvent evenimentModificat = new ScheduleEvent(txtTitlu.Text, descriere, dataStartParsata, dataStartParsata.AddHours(1), optiuniFinale, isCompleted, null);
+
+            //    evenimentModificat.IsCompleted = ckbFinalizat.IsChecked == true;
+
+
+            //    if (evenimentCurent != null)
+            //    {
+            //        manager.StergereEveniment(evenimentCurent.Title);
+            //    }
+
+            //    manager.AdaugaEveniment(evenimentModificat);
+            //    this.Close();
+            //}
+
+            if (this.Title == "Editează Evenimentul")
             {
-                lblTitlu.Foreground = Brushes.Red;
-                mesajEroare += $"- Titlul trebuie să aibă între {MIN_LUNGIME_TITLU} și {MAX_LUNGIME_TITLU} caractere.\n";
-                dateValide = false;
+
+                manager.StergereEveniment(evenimentCurent.Title);
             }
-
-            if (descriere.Length > MAX_LUNGIME_DESCRIERE)
-            {
-                lblDescriere.Foreground = Brushes.Red;
-                mesajEroare += $"- Descrierea nu poate depăși {MAX_LUNGIME_DESCRIERE} caractere.\n";
-                dateValide = false;
-            }
-            if (dpData.SelectedDate == null)
-            {
-                lblDataInceput.Foreground = Brushes.Red;
-                mesajEroare += "- Te rog să selectezi o dată din calendar.\n";
-                dateValide = false;
-            }
-            else
-            {
-                string ziSelectata = dpData.SelectedDate.Value.ToString("dd/MM/yyyy");
-                string oraIntrodusa = txtOra.Text.Trim();
-
-                string dataSiOraComplete = $"{ziSelectata} {oraIntrodusa}";
-
-                if (!DateTime.TryParseExact(dataSiOraComplete, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out dataStartParsata))
-                {
-                    lblDataInceput.Foreground = Brushes.Red;
-                    mesajEroare += "- Formatul orei este invalid. Folosește exact formatul HH:MM (ex: 14:30).\n";
-                    dateValide = false;
-                }
-            }
-
-            if (!dateValide)
-            {
-                txtErori.Text = "Erori găsite:\n" + mesajEroare;
-            }
-            else
-            {
-                ScheduleEvent evenimentModificat = new ScheduleEvent(txtTitlu.Text, "", dataStartParsata, dataStartParsata.AddHours(1), optiuniFinale, isCompleted, null);
-
-                evenimentModificat.IsCompleted = ckbFinalizat.IsChecked == true;
-
-
-                if (evenimentDeEditat != null)
-                {
-                    manager.StergereEveniment(evenimentDeEditat.Title);
-                }
-
-                manager.AdaugaEveniment(evenimentModificat);
-                this.Close();
-            }
+            manager.AdaugaEveniment(evenimentCurent);
+            this.Close();
         }
 
         private void ReseteazaCulori()
@@ -143,12 +152,12 @@ namespace ScheduleGUI
             }
         }
 
-        private bool GetStareEveniment()
-        {
-            if (radioNefinalizat.IsChecked == true)
-                return false;
-            else
-                return true;
-        }
+        //private bool GetStareEveniment()
+        //{
+        //    if (radioNefinalizat.IsChecked == true)
+        //        return false;
+        //    else
+        //        return true;
+        //}
     }
 }
