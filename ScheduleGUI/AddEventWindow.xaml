@@ -7,6 +7,7 @@
         xmlns:conv="clr-namespace:ScheduleGUI.Convertors"
         xmlns:models="clr-namespace:Models.Enums;assembly=Models"
         mc:Ignorable="d"
+        AllowsTransparency="False" WindowStyle="ThreeDBorderWindow"
         Title="Adaugă un Eveniment Nou" Height="480" Width="400" WindowStartupLocation="CenterScreen" Background="#F0F4F8">
 
     <Window.Resources>
@@ -23,71 +24,81 @@
     </Window.Resources>
 
 
-    <Grid Margin="20">
+    <Grid Margin="25">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Creează Eveniment" FontSize="22" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,20"/>
-
-        <StackPanel Grid.Row="1" Margin="0,5">
-            <Label x:Name="lblTitlu" Content="Titlu Eveniment:" FontWeight="SemiBold"/>
-            <TextBox Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="txtTitlu" Height="25" Padding="2"/>
+        <StackPanel Margin="0,0,0,20">
+            <TextBlock Text="Detalii Eveniment" FontSize="24" FontWeight="Bold" Foreground="#1E293B"/>
+            <TextBlock Text="Completeaza informatiile de mai jos" Foreground="#64748B" FontSize="13"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Margin="0,5">
-            <Label x:Name="lblDescriere" Content="Descriere scurtă:" FontWeight="SemiBold"/>
-            <TextBox Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="txtDescriere" Height="50" TextWrapping="Wrap" AcceptsReturn="True" Padding="2"/>
-        </StackPanel>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,-15,0" Padding="0,0,15,0">
+            <StackPanel>
 
-        <StackPanel Grid.Row="3" Margin="0,5">
-            <Label x:Name="lblDataInceput" Content="Data și Ora de început:" FontWeight="SemiBold"/>
-            <StackPanel Orientation="Horizontal">
-                <DatePicker Text="{Binding StartTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="dpData" Width="150" Margin="0,0,10,0"/>
+                <TextBlock Text="INFORMATII GENERALE" FontSize="11" FontWeight="Bold" Foreground="#94A3B8" Margin="0,10,0,8"/>
 
-                <TextBlock Text="Ora:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <TextBox x:Name="txtOra" Width="60" Padding="2" Text="12:00" VerticalAlignment="Center" ToolTip="Format: HH:mm"/>
+                <Border Background="White" CornerRadius="10" Padding="15" Margin="0,0,0,15">
+                    <StackPanel>
+                        <Label Content="Titlu Eveniment" Foreground="#475569" FontSize="12" Padding="0,0,0,5"/>
+                        <Border BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="6" Padding="5,2">
+                            <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" Background="Transparent" FontSize="14"/>
+                        </Border>
+
+                        <Label Content="Descriere" Foreground="#475569" FontSize="12" Padding="0,15,0,5"/>
+                        <Border BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="6" Padding="5,2">
+                            <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" 
+                                     BorderThickness="0" Background="Transparent" FontSize="14" 
+                                     Height="80" TextWrapping="Wrap" AcceptsReturn="True"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <TextBlock Text="INTERVAL" FontSize="11" FontWeight="Bold" Foreground="#94A3B8" Margin="0,10,0,8"/>
+
+                <Border Background="White" CornerRadius="10" Padding="15" Margin="0,0,0,15">
+                    <StackPanel>
+                        <Label Content="Data Evenimentului" Foreground="#475569" FontSize="12" Padding="0,0,0,5"/>
+                        <DatePicker SelectedDate="{Binding StartTime}" Margin="0,0,0,10"/>
+
+                        <Label Content="Optiuni" Foreground="#475569" FontSize="12" Padding="0,10,0,5"/>
+                        <WrapPanel>
+                            <CheckBox Content="Online" IsChecked="{Binding Options, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static models:EventOptions.Online}}" Margin="0,5,20,5"/>
+                            <CheckBox Content="Reminder" IsChecked="{Binding Options, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static models:EventOptions.Reminder}}" Margin="0,5,20,5"/>
+                            <CheckBox Content="Recurent" IsChecked="{Binding Options, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static models:EventOptions.Recurent}}" Margin="0,5,0,5"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="White" CornerRadius="10" Padding="15">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Eveniment Finalizat?" VerticalAlignment="Center" Foreground="#475569" FontWeight="SemiBold"/>
+                        <CheckBox IsChecked="{Binding IsCompleted}" Margin="15,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
             </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Anuleaza" Width="100" Height="38" Background="Transparent" BorderBrush="#CBD5E1" BorderThickness="1" Foreground="#64748B" Margin="0,0,12,0" Click="BtnAnuleaza_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <Button Content="Salveaza Eveniment" Width="160" Height="38" Background="#3B82F6" Foreground="White" FontWeight="Bold" BorderThickness="0" Click="BtnSalveaza_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </StackPanel>
-
-        <StackPanel Grid.Row="4">
-            <Label Content="Opțiuni notificare:"/>
-            <StackPanel Orientation="Horizontal">
-                <CheckBox x:Name="ckbOnline"
-                          Content="Online"
-                          Margin="0,0,15,0"
-                          IsChecked="{Binding Options, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static models:EventOptions.Online}}"/>
-                <CheckBox x:Name="ckbReminder" 
-                          Content="Reminder" 
-                          Margin="0,0,15,0"
-                          IsChecked="{Binding Options, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static models:EventOptions.Reminder}}"/>
-                <CheckBox x:Name="ckbRecurent" 
-                          Content="Recurent" 
-                          Margin="0,0,15,0"
-                          IsChecked="{Binding Options, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static models:EventOptions.Recurent}}"/>
-            </StackPanel>
-        </StackPanel>
-
-        <StackPanel Grid.Row="5">
-            <Label Content="Stare:"/>
-            <StackPanel Orientation="Horizontal">
-                <CheckBox Content="Finalizat"
-                             x:Name="ckbFinalizat" 
-                             IsChecked="{Binding IsCompleted, Mode=TwoWay}"
-                             Margin="0,0,15,0"/>
-            </StackPanel>
-        </StackPanel>
-
-
-        <TextBlock x:Name="txtErori" Grid.Row="6" Foreground="Red" FontWeight="Bold" TextWrapping="Wrap" Margin="0,10"/>
-
-        <Button Grid.Row="7" Content="Salveza" Height="35" Background="#3498DB" Foreground="White" FontWeight="Bold" Click="BtnSalveaza_Click"/>
     </Grid>
 </Window>

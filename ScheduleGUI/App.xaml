@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:ScheduleGUI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/ModernTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

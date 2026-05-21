@@ -19,13 +19,12 @@ namespace ScheduleGUI
 {
     public partial class AddEventWindow : Window
     {
-        private const int MIN_LUNGIME_TITLU = 3;
-        private const int MAX_LUNGIME_TITLU = 30;
-        private const int MAX_LUNGIME_DESCRIERE = 100;
-
         private IStocareData manager;
         private ScheduleEvent evenimentCurent;
         List<EventOptions> optiuniSelectate;
+
+        private string titluOriginal;
+        private bool esteEditare;
 
         public AddEventWindow(ScheduleEvent ev = null)
         {
@@ -36,10 +35,14 @@ namespace ScheduleGUI
             if (ev != null)
             {
                 evenimentCurent = ev;
+                titluOriginal = ev.Title;
+                esteEditare = true;
                 this.Title = "Editează Evenimentul";
             }
             else
             {
+                esteEditare = false;
+                this.Title = "Gestionare Eveniment";
                 evenimentCurent = new ScheduleEvent("", "", DateTime.Now, DateTime.Now.AddHours(1), EventOptions.Niciuna, false);
             }
 
@@ -48,89 +51,17 @@ namespace ScheduleGUI
 
         private void BtnSalveaza_Click(object sender, RoutedEventArgs e)
         {
-            ReseteazaCulori();
-            string mesajEroare = "";
-            bool dateValide = true;
-
-            //string titlu = txtTitlu.Text.Trim();
-            //string descriere = txtDescriere.Text.Trim();
-            //DateTime dataStartParsata = DateTime.Now;
-            //bool isCompleted = GetStareEveniment();
-
-            //EventOptions optiuniFinale = EventOptions.Niciuna;
-
-            //foreach (var optiune in optiuniSelectate)
-            //    optiuniFinale = optiuniFinale | optiune;
-
-            //if (titlu.Length < MIN_LUNGIME_TITLU || titlu.Length > MAX_LUNGIME_TITLU)
-            //{
-            //    lblTitlu.Foreground = Brushes.Red;
-            //    mesajEroare += $"- Titlul trebuie să aibă între {MIN_LUNGIME_TITLU} și {MAX_LUNGIME_TITLU} caractere.\n";
-            //    dateValide = false;
-            //}
-
-            //if (descriere.Length > MAX_LUNGIME_DESCRIERE)
-            //{
-            //    lblDescriere.Foreground = Brushes.Red;
-            //    mesajEroare += $"- Descrierea nu poate depăși {MAX_LUNGIME_DESCRIERE} caractere.\n";
-            //    dateValide = false;
-            //}
-            //if (dpData.SelectedDate == null)
-            //{
-            //    lblDataInceput.Foreground = Brushes.Red;
-            //    mesajEroare += "- Te rog să selectezi o dată din calendar.\n";
-            //    dateValide = false;
-            //}
-            //else
-            //{
-            //    string ziSelectata = dpData.SelectedDate.Value.ToString("dd/MM/yyyy");
-            //    string oraIntrodusa = txtOra.Text.Trim();
-
-            //    string dataSiOraComplete = $"{ziSelectata} {oraIntrodusa}";
-
-            //    if (!DateTime.TryParseExact(dataSiOraComplete, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out dataStartParsata))
-            //    {
-            //        lblDataInceput.Foreground = Brushes.Red;
-            //        mesajEroare += "- Formatul orei este invalid. Folosește exact formatul HH:MM (ex: 14:30).\n";
-            //        dateValide = false;
-            //    }
-            //}
-
-            //if (!dateValide)
-            //{
-            //    txtErori.Text = "Erori găsite:\n" + mesajEroare;
-            //}
-            //else
-            //{
-            //    ScheduleEvent evenimentModificat = new ScheduleEvent(txtTitlu.Text, descriere, dataStartParsata, dataStartParsata.AddHours(1), optiuniFinale, isCompleted, null);
-
-            //    evenimentModificat.IsCompleted = ckbFinalizat.IsChecked == true;
-
-
-            //    if (evenimentCurent != null)
-            //    {
-            //        manager.StergereEveniment(evenimentCurent.Title);
-            //    }
-
-            //    manager.AdaugaEveniment(evenimentModificat);
-            //    this.Close();
-            //}
-
-            if (this.Title == "Editează Evenimentul")
+            if (string.IsNullOrWhiteSpace(evenimentCurent.Title))
             {
-
-                manager.StergereEveniment(evenimentCurent.Title);
+                MessageBox.Show("Te rog sa introduci un titlu pentru eveniment!", "Eroare Validare", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return; 
             }
-            manager.AdaugaEveniment(evenimentCurent);
-            this.Close();
-        }
 
-        private void ReseteazaCulori()
-        {
-            lblTitlu.Foreground = Brushes.Black;
-            lblDescriere.Foreground = Brushes.Black;
-            lblDataInceput.Foreground = Brushes.Black;
-            txtErori.Text = "";
+            if (esteEditare)
+                manager.StergereEveniment(titluOriginal);
+            manager.AdaugaEveniment(evenimentCurent);
+
+            this.Close();
         }
 
         private void Optiune_CheckedChanged(object sender, RoutedEventArgs e)
@@ -152,12 +83,9 @@ namespace ScheduleGUI
             }
         }
 
-        //private bool GetStareEveniment()
-        //{
-        //    if (radioNefinalizat.IsChecked == true)
-        //        return false;
-        //    else
-        //        return true;
-        //}
+        private void BtnAnuleaza_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
