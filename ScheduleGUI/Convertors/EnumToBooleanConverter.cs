@@ -8,20 +8,33 @@ namespace ScheduleGUI.Convertors
 {
     public class EnumToBooleanConverter : IValueConverter
     {
+        private uint _valoareCurenta;
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null || parameter == null) return false;
 
-            return value.Equals(parameter);
+            _valoareCurenta = (uint)System.Convert.ChangeType(value, typeof(uint));
+            uint flag = (uint)System.Convert.ChangeType(parameter, typeof(uint));
+
+            return (_valoareCurenta & flag) == flag;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value != null && (bool)value)
+            bool isChecked = (bool)value;
+            uint flag = (uint)System.Convert.ChangeType(parameter, typeof(uint));
+
+            if (isChecked)
             {
-                return parameter;
+                _valoareCurenta |= flag;
             }
-            return Binding.DoNothing;
+            else
+            {
+                _valoareCurenta &= ~flag;
+            }
+
+            return Enum.ToObject(targetType, _valoareCurenta);
         }
     }
 }

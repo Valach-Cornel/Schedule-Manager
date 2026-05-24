@@ -1,2 +1,2 @@
-16ad9fdb-9539-45b9-a9e7-9a6830d25f2a;ana are mere;1;5/22/2026 1:07:13 AM;5/22/2026 2:07:13 AM;False;;Reminder
-12180c6c-2ea4-4ba7-b601-b145e23b6c68;ok;;5/22/2026 1:08:37 AM;5/22/2026 2:08:37 AM;True;;Reminder
+8cff4268-c9a9-40ae-a9db-811e1c34d838;cornel;abc;5/24/2026 8:49:21 PM;5/24/2026 9:49:21 PM;False;8dccf075-732f-4bdc-9bb7-b1ff3b114007|Licență|Facultate|Proiect final|False|1;Recurent
+a7893545-bea6-4977-bb83-4d86e89bd034;casd;aa;5/22/2026 12:00:00 AM;5/24/2026 10:05:39 PM;False;6cf61ebf-1a8d-44e8-93a1-edba9ae29aa9|Renovare|Personal|Bucătărie|False|2;Online, Reminder

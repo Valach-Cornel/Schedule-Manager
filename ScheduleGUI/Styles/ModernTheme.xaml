@@ -72,4 +72,14 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="CardBorderStyle" TargetType="Border">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect BlurRadius="12" Color="Black" ShadowDepth="1" Opacity="0.12"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

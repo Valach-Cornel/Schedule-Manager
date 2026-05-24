@@ -31,57 +31,114 @@ namespace Schedule_Manager
         public Guid Id
         {
             get { return _id; }
-            set { if (_id != value) { _id = value; OnPropertyChanged(); } }
+            set 
+            {
+                if (_id != value) 
+                { 
+                    _id = value;
+                    OnPropertyChanged();
+                } 
+            }
         }
 
         private string _title;
         public string Title
         {
             get { return _title; }
-            set { if (_title != value) { _title = value; OnPropertyChanged(); } }
+            set 
+            { 
+                if (_title != value)
+                { 
+                    _title = value;
+                    OnPropertyChanged();
+                } 
+            }
         }
 
         private string _description;
         public string Description
         {
             get { return _description; }
-            set { if (_description != value) { _description = value; OnPropertyChanged(); } }
+            set 
+            { 
+                if (_description != value)
+                { 
+                    _description = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         private DateTime _startTime;
         public DateTime StartTime
         {
             get { return _startTime; }
-            set { if (_startTime != value) { _startTime = value; OnPropertyChanged(); } }
+            set 
+            { 
+                if (_startTime != value)
+                { 
+                    _startTime = value; 
+                    OnPropertyChanged(); 
+                } 
+            }
         }
 
         private DateTime _endTime;
         public DateTime EndTime
         {
             get { return _endTime; }
-            set { if (_endTime != value) { _endTime = value; OnPropertyChanged(); } }
+            set 
+            { 
+                if (_endTime != value) 
+                { 
+                    _endTime = value; 
+                    OnPropertyChanged(); 
+                } 
+            }
         }
 
         private bool _isCompleted;
         public bool IsCompleted
         {
             get { return _isCompleted; }
-            set { if (_isCompleted != value) { _isCompleted = value; OnPropertyChanged(); } }
+            set 
+            { 
+                if (_isCompleted != value)
+                { 
+                    _isCompleted = value;
+                    OnPropertyChanged(); 
+                } 
+            }
         }
 
         private EventOptions _options;
         public EventOptions Options
         {
             get { return _options; }
-            set { if (_options != value) { _options = value; OnPropertyChanged(); } }
+            set 
+            { 
+                if (_options != value)
+                { 
+                    _options = value; OnPropertyChanged();
+                } 
+            }
         }
 
         private Objective _parentObjective;
         public Objective ParentObjective
         {
             get { return _parentObjective; }
-            set { if (_parentObjective != value) { _parentObjective = value; OnPropertyChanged(); } }
+            set 
+            {
+                if (_parentObjective != value) 
+                { 
+                    _parentObjective = value;
+                    OnPropertyChanged(); 
+                } 
+            }
         }
+
+        public DateTime ZiuaEvenimentului => StartTime.Date;
 
         public ScheduleEvent(string title, string description, DateTime startTime, DateTime endTime, EventOptions options, bool state, Objective parentObjective = null)
         {
@@ -98,42 +155,45 @@ namespace Schedule_Manager
 
         public ScheduleEvent(string linieFisier)
         {
-            string[] date = linieFisier.Split(SEPARATOR_FISIER);
+            string[] date = linieFisier.Split(';');
 
-            this.Id = Guid.Parse(date[ID]);
-            this.Title = date[TITLE];
-            this.StartTime = DateTime.Parse(date[STARTTIME]);
-            this.Description = date[DESCRIPTION];
-            this.EndTime = DateTime.Parse(date[ENDTIME]);
-            this.IsCompleted = bool.Parse(date[ISCOMPLETED]);
+            this.Id = Guid.Parse(date[0]);
+            this.Title = date[1];
+            this.Description = date[2];
+            this.StartTime = DateTime.Parse(date[3]);
+            this.EndTime = DateTime.Parse(date[4]);
+            this.IsCompleted = bool.Parse(date[5]);
 
-            this.Options = (EventOptions)Enum.Parse(typeof(EventOptions), date[OPTIONS]);
+            string textObiectiv = date[6];
 
-            string textObiectiv = date[PARENTOBJECTIVE];
-
-            if(!string.IsNullOrEmpty(textObiectiv))
+            if (!string.IsNullOrEmpty(textObiectiv) && textObiectiv != "NULL")
             {
                 string[] dateObj = textObiectiv.Split('|');
 
-                string objTitle = dateObj[TITLE_OBJ];
-                string objCategory = dateObj[CATEGORY_OBJ];
-                string objDesc = dateObj[DESCRIPTION_OBJ];
-                Priority objPrio = (Priority)int.Parse(dateObj[PRIORITATEOBIECTIV_OBJ]);
+                Guid objId = Guid.Parse(dateObj[0]);
+                string objTitle = dateObj[1];
+                string objCategory = dateObj[2];
+                string objDesc = dateObj[3];
+                bool objIsCompleted = bool.Parse(dateObj[4]);
+                Priority objPrio = (Priority)int.Parse(dateObj[5]);
 
-                ParentObjective = new Objective(objTitle, objCategory, objDesc, objPrio);
-            }else
+                ParentObjective = new Objective(objId, objTitle, objCategory, objDesc, objIsCompleted, objPrio);
+            }
+            else
             {
                 ParentObjective = null;
             }
+
+            this.Options = (EventOptions)Enum.Parse(typeof(EventOptions), date[7]);
         }
 
         public string ConversieLaSirPentruFisier()
         {
             string dateObiectiv = string.Empty;
             if (ParentObjective != null)
-                dateObiectiv = $"{ParentObjective.Title}|{ParentObjective.Category}|{ParentObjective.Description}|{ParentObjective.IsAchieved}|{(int)ParentObjective.PrioritateObiectiv}";
+                dateObiectiv = $"{ParentObjective.Id}|{ParentObjective.Title}|{ParentObjective.Category}|{ParentObjective.Description}|{ParentObjective.IsCompleted}|{(int)ParentObjective.PrioritateObiectiv}";
 
-            return $"{Id}{SEPARATOR_FISIER}{Title}{SEPARATOR_FISIER}{Description}{SEPARATOR_FISIER}{StartTime}{SEPARATOR_FISIER}{EndTime}{SEPARATOR_FISIER}{IsCompleted}{SEPARATOR_FISIER}{dateObiectiv}{SEPARATOR_FISIER}{Options}";
+            return $"{Id};{Title};{Description};{StartTime};{EndTime};{IsCompleted};{dateObiectiv};{Options}";
         }
         public string Info()
         {

@@ -20,6 +20,7 @@ namespace ScheduleGUI
     public partial class AddEventWindow : Window
     {
         private IStocareData manager;
+        private ObjectiveManager managerObiective;
         private ScheduleEvent evenimentCurent;
         List<EventOptions> optiuniSelectate;
 
@@ -30,7 +31,10 @@ namespace ScheduleGUI
         {
             InitializeComponent();
             manager = StocareFactory.GetManager();
+            managerObiective = new ObjectiveManager();
             optiuniSelectate = new List<EventOptions>();
+
+            cmbObiective.ItemsSource = managerObiective.ObtineObiective();
 
             if (ev != null)
             {

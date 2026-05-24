@@ -1,6 +1,7 @@
 ﻿using DataAccess;
 using Models.Enums;
 using Schedule_Manager;
+using System.ComponentModel;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Windows;
@@ -25,6 +26,7 @@ namespace ScheduleGUI
         private DispatcherTimer timerNotificari;
         private HashSet<string> alarmeDeclansate = new HashSet<string>();
         private List<ScheduleEvent> events;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -111,7 +113,14 @@ namespace ScheduleGUI
                     evenimenteFiltrate = evenimenteFiltrate.OrderByDescending(ev => ev.StartTime).ToList();
             }
 
-            listaCarduri.ItemsSource = evenimenteFiltrate.ToList();
+            var lista = evenimenteFiltrate.ToList();
+
+            ICollectionView view = CollectionViewSource.GetDefaultView(lista);
+            view.GroupDescriptions.Clear();
+            view.GroupDescriptions.Add(new PropertyGroupDescription("ZiuaEvenimentului"));
+
+            listaCarduri.ItemsSource = null;
+            listaCarduri.ItemsSource = view;
         }
 
         private void txtCauta_TextChanged(object sender, TextChangedEventArgs e)
@@ -151,6 +160,17 @@ namespace ScheduleGUI
             }
 
             listaCarduri.SelectedItem = null;
+        }
+
+        private void CheckBoxFinalizat_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox cb && cb.DataContext is ScheduleEvent evenimentModificat)
+            {
+                manager.StergereEveniment(evenimentModificat.Title);
+                manager.AdaugaEveniment(evenimentModificat);
+
+                ActualizeazaListaEvenimente();
+            }
         }
     }
 }
