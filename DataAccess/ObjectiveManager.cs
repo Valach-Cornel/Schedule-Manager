@@ -12,8 +12,11 @@ namespace DataAccess
 
         public ObjectiveManager()
         {
-            objectives.Add(new Objective(Guid.NewGuid(), "Licență", "Facultate", "Proiect final", false, (Priority)1));
-            objectives.Add(new Objective(Guid.NewGuid(), "Renovare", "Personal", "Bucătărie", false, (Priority)2));
+            AdaugaObiectiv(new Objective(Guid.NewGuid(), "Licenta", "Facultate", "Proiect final", false, Priority.Ridicata));
+            AdaugaObiectiv(new Objective(Guid.NewGuid(), "Sport", "Personal", "Sala de forta", false, Priority.Medie));
+            AdaugaObiectiv(new Objective(Guid.NewGuid(), "Cumparaturi", "Casa", "Materiale renovare", false, Priority.Medie));
+            AdaugaObiectiv(new Objective(Guid.NewGuid(), "Curs C#", "Educație", "Invatare WPF", false, Priority.Ridicata));
+            AdaugaObiectiv(new Objective(Guid.NewGuid(), "Facturi", "Finante", "Plata utilitati", false, Priority.Scazuta));
         }
         public void AdaugaObiectiv(Objective obj)
         {

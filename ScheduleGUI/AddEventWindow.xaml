@@ -8,7 +8,7 @@
         xmlns:models="clr-namespace:Models.Enums;assembly=Models"
         mc:Ignorable="d"
         AllowsTransparency="False" WindowStyle="ThreeDBorderWindow"
-        Title="Adaugă un Eveniment Nou" Height="480" Width="400" WindowStartupLocation="CenterScreen" Background="#F0F4F8">
+        Title="Adaugă un Eveniment Nou" Height="550" Width="400" WindowStartupLocation="CenterScreen" Background="#F0F4F8">
 
     <Window.Resources>
         <Style TargetType="TextBox">
@@ -56,30 +56,61 @@
                                      BorderThickness="0" Background="Transparent" FontSize="14" 
                                      Height="80" TextWrapping="Wrap" AcceptsReturn="True"/>
                         </Border>
+
+                        <Label Content="Apartine de Obiectivul (Optional)" Foreground="#475569" FontSize="12" Padding="0,15,0,5"/>
+
+                        <Border BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="6" Padding="5">
+                            <ComboBox x:Name="cmbObiective" 
+                                      DisplayMemberPath="Title" 
+                                      SelectedItem="{Binding ParentObjective, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      Background="Transparent" BorderThickness="0" FontSize="14" Foreground="#334155" Margin="2">
+                                <ComboBox.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="6"/>
+                                        <Setter Property="BorderBrush" Value="#E2E8F0"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                    </Style>
+                                </ComboBox.Resources>
+                            </ComboBox>
+                        </Border>
                     </StackPanel>
                 </Border>
 
-                <Label Content="Apartine de Obiectivul (Optional)" Foreground="#475569" FontSize="12" Padding="0,15,0,5"/>
 
-                <ComboBox x:Name="cmbObiective" 
-                          DisplayMemberPath="Title" 
-                          SelectedItem="{Binding ParentObjective, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          Background="Transparent" BorderThickness="0" FontSize="14" Foreground="#334155" Margin="0,0,0,10">
-                    <ComboBox.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="6"/>
-                            <Setter Property="BorderBrush" Value="#E2E8F0"/>
-                            <Setter Property="BorderThickness" Value="1"/>
-                        </Style>
-                    </ComboBox.Resources>
-                </ComboBox>
 
                 <TextBlock Text="INTERVAL" FontSize="11" FontWeight="Bold" Foreground="#94A3B8" Margin="0,10,0,8"/>
 
                 <Border Background="White" CornerRadius="10" Padding="15" Margin="0,0,0,15">
                     <StackPanel>
-                        <Label Content="Data Evenimentului" Foreground="#475569" FontSize="12" Padding="0,0,0,5"/>
-                        <DatePicker SelectedDate="{Binding StartTime}" Margin="0,0,0,10"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,15">
+
+                            <StackPanel Orientation="Vertical" Margin="0,15,0,15">
+                                <StackPanel Margin="0,0,30,0">
+                                    <Label Content="Data si Ora Inceperii" Foreground="#475569" FontSize="12" Padding="0,0,0,5" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <DatePicker x:Name="dpDataInceput" Width="130" Margin="0,0,50,0"/>
+                                        <Border BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="6" Padding="5,2">
+                                            <TextBox x:Name="txtOraInceput" Width="60" MaxLength="5" FontSize="14"
+                                                     VerticalContentAlignment="Center" ToolTip="Format: HH:mm"
+                                                      BorderThickness="0" Background="Transparent"/>
+                                        </Border>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <StackPanel>
+                                    <Label Content="Data si Ora Finalizarii" Foreground="#475569" FontSize="12" Padding="0,0,0,5" Margin="0,10,0,5"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <DatePicker x:Name="dpDataSfarsit" Width="130" Margin="0,0,50,0"/>
+                                        <Border BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="6" Padding="5,2">
+                                            <TextBox x:Name="txtOraSfarsit" Width="60" MaxLength="5" FontSize="14"
+                                                 VerticalContentAlignment="Center" ToolTip="Format: HH:mm"
+                                                 BorderThickness="0" Background="Transparent"/>
+                                        </Border>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+
+                        </StackPanel>
 
                         <Label Content="Optiuni" Foreground="#475569" FontSize="12" Padding="0,10,0,5"/>
                         <WrapPanel>
@@ -100,22 +131,28 @@
             </StackPanel>
         </ScrollViewer>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-            <Button Content="Anuleaza" Width="100" Height="38" Background="Transparent" BorderBrush="#CBD5E1" BorderThickness="1" Foreground="#64748B" Margin="0,0,12,0" Click="BtnAnuleaza_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="8"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+        <StackPanel Grid.Row="2">
+            <TextBlock x:Name="txtMesajEroare" Foreground="#EF4444" FontSize="13" FontWeight="SemiBold" 
+                       HorizontalAlignment="Center" Margin="0,5,0,5" TextWrapping="Wrap" />
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
 
-            <Button Content="Salveaza Eveniment" Width="160" Height="38" Background="#3B82F6" Foreground="White" FontWeight="Bold" BorderThickness="0" Click="BtnSalveaza_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="8"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+                <Button Content="Anuleaza" Width="100" Height="38" Background="Transparent" BorderBrush="#CBD5E1" BorderThickness="1" Foreground="#64748B" Margin="0,0,12,0" Click="BtnAnuleaza_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="8"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <Button Content="Salveaza Eveniment" Width="160" Height="38" Background="#3B82F6" Foreground="White" FontWeight="Bold" BorderThickness="0" Click="BtnSalveaza_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="8"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
         </StackPanel>
+       
     </Grid>
 </Window>

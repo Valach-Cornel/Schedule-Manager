@@ -119,7 +119,8 @@ namespace Schedule_Manager
             { 
                 if (_options != value)
                 { 
-                    _options = value; OnPropertyChanged();
+                    _options = value; 
+                    OnPropertyChanged();
                 } 
             }
         }
