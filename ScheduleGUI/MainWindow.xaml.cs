@@ -126,15 +126,6 @@ namespace ScheduleGUI
             ActualizeazaListaEvenimente();
         }
 
-        private void txtbox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string textCautat = txtCauta.Text.ToLower();
-
-            var evenimenteFiltrate = events.Where(ev => ev.Title.ToLower().Contains(textCautat)).ToList();
-
-            listaCarduri.ItemsSource = evenimenteFiltrate;
-        }
-
         private void ListaCarduri_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (listaCarduri.SelectedItem == null)

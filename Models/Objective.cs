@@ -58,11 +58,6 @@ namespace Schedule_Manager
             PrioritateObiectiv = int.Parse(date[5]);
         }
 
-        public string ConversieLaSirPentruFisier()
-        {
-            return $"{Id}^{Title}^{Category}^{Description}^{IsCompleted}^{PrioritateObiectiv}";
-        }
-
         public string Info()
         {
             string status = IsCompleted ? "[X]" : "[ ]";
