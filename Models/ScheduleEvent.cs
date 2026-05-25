@@ -11,21 +11,6 @@ namespace Schedule_Manager
 {
     public class ScheduleEvent : INotifyPropertyChanged
     {
-        private const char SEPARATOR_FISIER = ';';
-        private const int ID = 0;
-        private const int TITLE = 1;
-        private const int DESCRIPTION = 2;
-        private const int STARTTIME = 3;
-        private const int ENDTIME = 4;
-        private const int ISCOMPLETED = 5;
-        private const int PARENTOBJECTIVE = 6;
-        private const int OPTIONS = 7;
-
-        private const int TITLE_OBJ = 0;
-        private const int CATEGORY_OBJ = 1;
-        private const int DESCRIPTION_OBJ = 2;
-        private const int ISACHIEVED_OBJ = 3;
-        private const int PRIORITATEOBIECTIV_OBJ = 4;
 
         private Guid _id;
         public Guid Id

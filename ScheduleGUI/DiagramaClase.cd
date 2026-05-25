@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ScheduleGUI.MainWindow">
+    <Position X="5.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAICAAAAAACAAAAIIAAEGAAAAAAIAAAABAAAAAAQ=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="manager" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Schedule_Manager.ScheduleEvent">
+    <Position X="2.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="ParentObjective" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Schedule_Manager.Objective">
+    <Position X="5.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ScheduleGUI.AddEventWindow">
+    <Position X="3.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAIQEEIAAAAAAAAAAAAAABABA=</HashCode>
+      <FileName>AddEventWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="manager" />
+      <Field Name="evenimentCurent" />
+      <Field Name="managerObiective" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DataAccess.ObjectiveManager">
+    <Position X="1" Y="3" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="DataAccess.IStocareData">
+    <Position X="5" Y="5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
